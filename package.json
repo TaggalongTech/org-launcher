@@ -1,7 +1,7 @@
 {
   "name": "@taggalongtech/org-launcher",
   "description": "One fast, keyboard-first table of every Salesforce org your sf CLI knows.",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "author": "Taggalong",
   "license": "MIT",
   "repository": {
