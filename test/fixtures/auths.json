@@ -1,0 +1,80 @@
+{
+  "scratchPair": [
+    {
+      "orgId": "00DAA0000000001AAA",
+      "username": "test-abc123@example.com",
+      "aliases": ["blue"],
+      "isScratch": true,
+      "isDevHub": false,
+      "isSandbox": false,
+      "instanceUrl": "https://blue-scratch.my.salesforce.com",
+      "devHubUsername": "hub@example.com",
+      "expirationDate": "2999-01-01",
+      "isExpired": false
+    },
+    {
+      "orgId": "00DAA0000000001AAA",
+      "username": "qa@blue.example.com",
+      "aliases": ["blue-qa"],
+      "isScratch": false,
+      "isDevHub": false,
+      "isSandbox": false,
+      "instanceUrl": "https://blue-scratch.my.salesforce.com",
+      "isExpired": false
+    }
+  ],
+  "devHub": {
+    "orgId": "00DBB0000000002BBB",
+    "username": "hub@example.com",
+    "aliases": ["aaa-long", "hub"],
+    "isScratch": false,
+    "isDevHub": true,
+    "isSandbox": false,
+    "instanceUrl": "https://hub.my.salesforce.com",
+    "isExpired": false
+  },
+  "sandboxPair": [
+    {
+      "orgId": "00DCC0000000003CCC",
+      "username": "admin@corp.example.com.uat",
+      "aliases": [],
+      "isScratch": false,
+      "isDevHub": false,
+      "isSandbox": true,
+      "instanceUrl": "https://corp--uat.sandbox.my.salesforce.com",
+      "isExpired": false
+    },
+    {
+      "orgId": "00DCC0000000003CCC",
+      "username": "builder@corp.example.com.uat",
+      "aliases": [],
+      "isScratch": false,
+      "isDevHub": false,
+      "isSandbox": true,
+      "instanceUrl": "https://corp--uat.sandbox.my.salesforce.com",
+      "isExpired": false
+    }
+  ],
+  "aliasPair": [
+    {
+      "orgId": "00DDD0000000004DDD",
+      "username": "amy@prod.example.com",
+      "aliases": ["qa-readonly"],
+      "isScratch": false,
+      "isDevHub": false,
+      "isSandbox": false,
+      "instanceUrl": "https://prod.my.salesforce.com",
+      "isExpired": false
+    },
+    {
+      "orgId": "00DDD0000000004DDD",
+      "username": "zed@prod.example.com",
+      "aliases": ["admin"],
+      "isScratch": false,
+      "isDevHub": false,
+      "isSandbox": false,
+      "instanceUrl": "https://prod.my.salesforce.com",
+      "isExpired": false
+    }
+  ]
+}

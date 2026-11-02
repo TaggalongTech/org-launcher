@@ -1,0 +1,21 @@
+# build output
+lib/
+*.tsbuildinfo
+oclif.manifest.json
+
+# dependencies and logs
+node_modules/
+npm-debug.log*
+.npmrc
+
+# packing and test artifacts
+*.tgz
+tmp/
+coverage/
+.nyc_output/
+.eslintcache
+
+# local scratch and OS files
+.superpowers/
+.DS_Store
+.idea/

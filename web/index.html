@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Org Launcher</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header class="bar">
+    <input id="search" class="search" type="search" placeholder="Filter  ( / )   ↑↓ to move, Enter to open" autocomplete="off" aria-label="Filter orgs" autofocus>
+    <nav id="tabs" class="tabs" aria-label="Tags"></nav>
+    <span id="status" class="status"></span>
+    <button id="refresh" class="link" type="button">refresh</button>
+    <button id="settings" class="link" type="button">settings</button>
+  </header>
+  <div id="banner" class="banner" hidden></div>
+  <main>
+    <table id="grid">
+      <thead><tr id="head"></tr></thead>
+      <tbody id="rows"><tr><td class="empty" colspan="7">Loading…</td></tr></tbody>
+    </table>
+  </main>
+  <footer>
+    <div class="foot">
+      <button id="toggle-hidden" class="link" type="button" hidden></button>
+      <a class="credit" href="https://taggalong.com/accelerators" target="_blank" rel="noopener noreferrer">Org Launcher <span id="version"></span> · by Taggalong</a>
+    </div>
+    <table id="hidden-grid"><tbody id="hidden-rows"></tbody></table>
+  </footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+name: Bug
+description: Something doesn't work the way the README says.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please leave out usernames, org ids, instance addresses and anything from a login link.
+        For a security problem, report it privately instead: see SECURITY.md.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run sf launcher
+        2. ...
+  - type: input
+    id: version
+    attributes:
+      label: Org Launcher version
+      description: Shown in the page's footer, or by sf plugins.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: sf
+    attributes:
+      label: sf CLI and Node.js versions
+      description: The output of sf --version.
+  - type: textarea
+    id: log
+    attributes:
+      label: Error lines
+      description: Error lines from the terminal, or from server.log in ~/.sf/org-launcher.
+      render: text
