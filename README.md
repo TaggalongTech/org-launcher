@@ -12,6 +12,14 @@ You need the [Salesforce CLI](https://developer.salesforce.com/tools/salesforcec
 sf plugins install @taggalongtech/org-launcher
 ```
 
+The sf CLI then says the plugin isn't signed by Salesforce and asks whether to continue. Answer `y`. Only
+Salesforce can sign sf CLI plugins, so every plugin from anyone else asks this. To skip the question on
+later installs and updates, add the plugin to the sf CLI's allow list, `~/.config/sf/unsignedPluginAllowList.json`:
+
+```json
+["@taggalongtech/org-launcher"]
+```
+
 ## Open it
 
 ```sh

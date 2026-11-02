@@ -38,3 +38,10 @@ The page lists the orgs your own sf CLI knows. You can also run `sf plugins link
 - **Plain words.** Messages say what happened and what to do next, in short sentences.
 
 Add a test with each change. The suite runs on macOS, Windows and Linux in CI.
+
+## Releasing (maintainers)
+
+1. Set the version: `npm version 1.2.3 --no-git-tag-version` (or `1.2.3-rc.1` for a pre-release), and commit.
+2. Tag and push: `git tag v1.2.3 && git push origin v1.2.3`.
+3. GitHub Actions (`.github/workflows/release.yml`) tests and publishes it to npm through trusted publishing.
+   Pre-releases go to the `next` tag; try one with `sf plugins install @taggalongtech/org-launcher@next`.
