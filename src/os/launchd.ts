@@ -2,7 +2,7 @@
  * macOS: a LaunchAgent in ~/Library/LaunchAgents that runs the server at login and restarts it if it fails.
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, posix } from 'node:path';
 import {
   LoginServiceError,
   refuseLineBreaks,
@@ -44,7 +44,8 @@ const unxml = (text: string): string =>
  * failed exit; a clean exit (stopped, port taken by another program, node or server gone) leaves it stopped.
  */
 export function launchdPlist({ nodePath, serverJs, home, userHome, path }: PlistInput): string {
-  const log = xml(join(home, 'server.log'));
+  // The plist is only ever read by launchd on macOS, so its paths are always POSIX.
+  const log = xml(posix.join(home, 'server.log'));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">

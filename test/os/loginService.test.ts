@@ -124,7 +124,8 @@ describe('loginService: starting at login', () => {
       expect(plist).to.include('<string>/usr/local/bin/node</string>\n    <string>/plugin/lib/server/main.js</string>');
       expect(plist).to.include('<string>/opt/homebrew/bin:/usr/bin:/bin</string>');
       expect(plist).not.to.include('secret-token');
-      expect(statSync(file).mode & 0o022).to.equal(0);
+      // Windows has no POSIX permission bits; launchd (macOS) is what needs the file not group/world-writable.
+      if (process.platform !== 'win32') expect(statSync(file).mode & 0o022).to.equal(0);
       expect(existsSync(home)).to.equal(true);
     });
 
