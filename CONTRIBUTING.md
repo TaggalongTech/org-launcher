@@ -27,7 +27,7 @@ export ORG_LAUNCHER_HOME="$(mktemp -d)"
 ./bin/run.js launcher stop
 ```
 
-The page lists the orgs your own sf CLI knows. You can also run `sf plugins link .` to use your checkout as the installed plugin. Run `sf plugins unlink @taggalong/org-launcher` when you're done.
+The page lists the orgs your own sf CLI knows. You can also run `sf plugins link .` to use your checkout as the installed plugin. Run `sf plugins unlink @taggalongtech/org-launcher` when you're done.
 
 ## Rules every change keeps
 

@@ -20,7 +20,7 @@ import { rememberProject } from '../../core/projects.js';
 import { launcherHome, StateStore, type OrgEntry } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher');
 
 export type LauncherResult = { url: string; started: boolean };
 

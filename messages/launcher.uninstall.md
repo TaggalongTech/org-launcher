@@ -38,7 +38,7 @@ Deleted your tags, notes and settings.
 
 # info.plugin
 
-To remove the plugin itself, run sf plugins uninstall @taggalong/org-launcher.
+To remove the plugin itself, run sf plugins uninstall @taggalongtech/org-launcher.
 
 # warn.atLogin
 

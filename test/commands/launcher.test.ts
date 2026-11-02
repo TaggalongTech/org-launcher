@@ -645,7 +645,7 @@ describe('commands: sf launcher', () => {
       expect(error).to.equal(undefined);
       expect(calls).to.deep.equal(['unregister', `stopServer ${home}`, 'removeDockApp']);
       expect(store.get(BLUE).tags).to.deep.equal(['keep']);
-      expect(out).to.include('sf plugins uninstall @taggalong/org-launcher');
+      expect(out).to.include('sf plugins uninstall @taggalongtech/org-launcher');
     });
 
     it('uninstall --purge deletes saved data', async () => {

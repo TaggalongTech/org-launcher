@@ -3,7 +3,7 @@ import { commandDeps, stopEverything, LauncherCommand } from '../../commandSuppo
 import { launcherHome } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.stop');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.stop');
 
 export type StopResult = { stopped: boolean; startsAtLogin: boolean };
 

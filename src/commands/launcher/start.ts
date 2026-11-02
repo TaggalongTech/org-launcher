@@ -22,8 +22,8 @@ import { serverState } from '../../core/client.js';
 import { launcherHome, StateStore } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.start');
-const launcherMessages = Messages.loadMessages('@taggalong/org-launcher', 'launcher');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.start');
+const launcherMessages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher');
 
 export type StartResult = { url: string; port: number; started: boolean; startsAtLogin: boolean };
 

@@ -6,7 +6,7 @@ import { commandDeps, startsAtLogin, LauncherCommand, UserError } from '../../co
 import { launcherHome } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.uninstall');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.uninstall');
 
 export type UninstallResult = { purged: boolean; home: string };
 

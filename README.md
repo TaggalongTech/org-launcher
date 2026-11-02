@@ -9,7 +9,7 @@ One fast, keyboard-first table of every Salesforce org your sf CLI knows.
 You need the [Salesforce CLI](https://developer.salesforce.com/tools/salesforcecli) (`sf`) with Node.js 22 or later.
 
 ```sh
-sf plugins install @taggalong/org-launcher
+sf plugins install @taggalongtech/org-launcher
 ```
 
 ## Open it
@@ -110,7 +110,7 @@ Remove the login service and the Dock app first, then the plugin:
 
 ```sh
 sf launcher uninstall
-sf plugins uninstall @taggalong/org-launcher
+sf plugins uninstall @taggalongtech/org-launcher
 ```
 
 `sf launcher uninstall` keeps your tags, notes and settings. Add `--purge` to delete them too.

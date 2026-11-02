@@ -4,7 +4,7 @@ import { commandDeps, LauncherCommand, UserError } from '../../commandSupport.js
 import { launcherHome, StateStore } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.dock');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.dock');
 
 /** The app's path after adding it; null after --remove. */
 export type DockResult = { app: string | null; removed: boolean };

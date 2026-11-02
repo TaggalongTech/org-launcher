@@ -6,7 +6,7 @@ import { updateOrg, type OrgPatch, type OrgSummary } from '../../core/client.js'
 import { launcherHome, StateStore } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.tag');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.tag');
 
 export type TagResult = OrgSummary & { org: string };
 

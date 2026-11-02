@@ -4,7 +4,7 @@ import { PortInUseError, serverHealth } from '../../core/client.js';
 import { launcherHome, StateStore } from '../../core/state.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@taggalong/org-launcher', 'launcher.status');
+const messages = Messages.loadMessages('@taggalongtech/org-launcher', 'launcher.status');
 
 export type StatusResult = {
   state: 'running' | 'not-running' | 'port-in-use';
