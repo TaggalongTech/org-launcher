@@ -207,7 +207,7 @@ describe('commands: sf launcher', () => {
     if (savedHome === undefined) delete process.env.ORG_LAUNCHER_HOME;
     else process.env.ORG_LAUNCHER_HOME = savedHome;
     await Promise.all(servers.map((s) => new Promise((resolve) => s.close(resolve))));
-    rmSync(home, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   describe('tag and note', () => {
@@ -327,7 +327,7 @@ describe('commands: sf launcher', () => {
         cliRoot = mkdtempSync(join(tmpdir(), 'org-launcher-cli-root-'));
         writeFileSync(join(cliRoot, 'package.json'), JSON.stringify({ name: 'fake-cli', version: '1.0.0', oclif: {} }));
       });
-      afterEach(() => rmSync(cliRoot, { recursive: true, force: true }));
+      afterEach(() => rmSync(cliRoot, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }));
 
       it('sf launcher starts the plugin server', async () => {
         usePort(await freePort());

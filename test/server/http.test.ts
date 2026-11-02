@@ -157,7 +157,7 @@ describe('http: local JSON API and page', () => {
     server.closeAllConnections();
     await new Promise<void>((resolve) => server.close(() => resolve()));
     chmodSync(dir, 0o700);
-    rmSync(dir, { recursive: true, force: true });
+    rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it('403 for Host evil.com', async () => {

@@ -92,7 +92,7 @@ describe('repo hygiene', () => {
         'web/icon.svg: links to https://example.com/y',
       ]);
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
     }
   });
 });

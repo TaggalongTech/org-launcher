@@ -18,7 +18,7 @@ describe('projects: link orgs to local projects', () => {
   });
 
   afterEach(() => {
-    rmSync(root, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   /** Makes a project folder with the given sfdx-project.json contents (a string is written as is). */

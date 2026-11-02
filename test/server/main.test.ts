@@ -18,7 +18,7 @@ describe('server main: the background process', () => {
   });
 
   afterEach(() => {
-    rmSync(home, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it('rotateLog moves a log over the limit to server.log.1, keeping one old log', () => {

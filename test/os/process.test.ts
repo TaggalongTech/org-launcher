@@ -48,7 +48,7 @@ describe('process: the background server', () => {
   });
 
   afterEach(() => {
-    rmSync(root, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it('startDetached runs the server in the launcher folder and stopServer stops it', async () => {

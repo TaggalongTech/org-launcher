@@ -88,7 +88,7 @@ describe('dockApp: the Mac Dock app', () => {
   });
 
   afterEach(() => {
-    rmSync(root, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   const build = (run: Run, pin = true): Promise<string> =>

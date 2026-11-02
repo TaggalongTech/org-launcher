@@ -82,7 +82,7 @@ describe('inventory: org checks in the background', () => {
   });
 
   afterEach(() => {
-    rmSync(dir, { recursive: true, force: true });
+    rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   function inventory(logins: OrgLogin[], query: OrgQuery, extra: { workers?: number; timeoutMs?: number } = {}): Inventory {
