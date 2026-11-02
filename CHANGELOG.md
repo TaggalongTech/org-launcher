@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (2026-11-02)
+
+- A new icon: rows of orgs, in Taggalong's line style, for the page, the browser tab and the Dock app.
+
 ## 0.1.0 (2026-11-02)
 
 First release.
