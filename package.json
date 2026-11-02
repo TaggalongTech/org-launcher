@@ -4,7 +4,10 @@
   "version": "0.1.0-rc.1",
   "author": "Taggalong",
   "license": "MIT",
-  "repository": "TaggalongTech/org-launcher",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaggalongTech/org-launcher.git"
+  },
   "homepage": "https://github.com/TaggalongTech/org-launcher",
   "bugs": "https://github.com/TaggalongTech/org-launcher/issues",
   "type": "module",
