@@ -56,9 +56,11 @@ function pickMain(logins: OrgLogin[], saved: string | null | undefined, defaultU
   // 1. The login the person chose, if it's still here.
   const chosen = saved ? logins.find((l) => l.username === saved) : undefined;
   if (chosen) return chosen;
-  // 2. The login that created a scratch org.
-  const scratch = logins.find((l) => l.isScratch);
-  if (scratch) return scratch;
+  // 2. The login that created a scratch org. Only that login's auth file names the Dev Hub; other users
+  //    logged in to the org (a launchpad's sales rep, say) don't. Then a scratch login with an alias, then any.
+  const scratch = logins.filter((l) => l.isScratch);
+  const creator = scratch.find((l) => l.devHubUsername) ?? scratch.find((l) => l.aliases.length > 0) ?? scratch[0];
+  if (creator) return creator;
   // 3. The sf CLI's default login, if it's on this org.
   const fallback = defaultUser ? logins.find((l) => l.username === defaultUser) : undefined;
   if (fallback) return fallback;

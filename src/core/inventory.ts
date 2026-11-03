@@ -19,7 +19,7 @@ export type OrgRow = {
   devHub: string | null;
   expires: string | null;
   daysLeft: number | null;
-  health: 'ok' | 'expired' | 'unreachable' | 'unknown';
+  health: 'ok' | 'expired' | 'unreachable' | 'limited' | 'unknown';
   healthReason: string | null;
   tags: string[];
   note: string;
@@ -229,7 +229,7 @@ function toRow(record: OrgRecord, entry: OrgEntry | undefined, check: CachedChec
     expires: record.expires,
     daysLeft: daysLeft(record.expires, now),
     health,
-    healthReason: health === 'unreachable' ? check?.reason ?? null : null,
+    healthReason: health === 'unreachable' || health === 'limited' ? check?.reason ?? null : null,
     tags: entry?.tags ?? [],
     note: entry?.note ?? '',
     hidden: entry?.hidden ?? false,
@@ -286,7 +286,7 @@ function readSource(raw: unknown): SourceHint | null | undefined {
 function readCachedCheck(raw: unknown): CachedCheck | undefined {
   if (!isRecord(raw)) return undefined;
   const { health, reason, orgType, packages, checkedAt } = raw;
-  if (health !== 'ok' && health !== 'unreachable') return undefined;
+  if (health !== 'ok' && health !== 'unreachable' && health !== 'limited') return undefined;
   if (orgType !== null && orgType !== 'production' && orgType !== 'developer') return undefined;
   if (!isStringOrNull(reason) || typeof checkedAt !== 'string' || !Array.isArray(packages)) return undefined;
   const pkgs = packages.map(readPkg);

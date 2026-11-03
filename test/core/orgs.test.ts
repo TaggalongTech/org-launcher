@@ -137,6 +137,55 @@ describe('orgs: one row per org', () => {
     expect(org.type).to.equal('org');
   });
 
+  describe('a scratch org with a second scratch login', () => {
+    // Salesforce Labs' launchpad logs a sales rep in next to the admin login that created the org.
+    // The sales rep sorts first alphabetically, so ties must not fall back to the first scratch login.
+    const LAUNCHPAD = '00DEE0000000006EEE';
+    const scratchLogin = (username: string, fields: Partial<OrgLogin> = {}): OrgLogin => ({
+      orgId: LAUNCHPAD,
+      username,
+      aliases: [],
+      isScratch: true,
+      isDevHub: false,
+      isSandbox: false,
+      instanceUrl: 'https://launchpad.scratch.my.salesforce.com',
+      isExpired: false,
+      ...fields,
+    });
+    const admin = (fields: Partial<OrgLogin> = {}): OrgLogin =>
+      scratchLogin('test-xyz789@example.com', {
+        aliases: ['rlm-base__study'],
+        devHubUsername: 'hub@example.com',
+        expirationDate: '2999-01-01',
+        ...fields,
+      });
+
+    it('the login that created the org is main', () => {
+      const [org] = buildOrgs([scratchLogin('salesrep@example.org.00dee0000000006eee'), admin()], {}, null);
+      expect(org.main.username).to.equal('test-xyz789@example.com');
+      expect(org.alias).to.equal('rlm-base__study');
+      expect(org.others.map((l) => l.username)).to.deep.equal(['salesrep@example.org.00dee0000000006eee']);
+    });
+
+    it('the creator wins even when the other login has an alias and the creator has none', () => {
+      const salesRep = scratchLogin('salesrep@example.org.00dee0000000006eee', { aliases: ['sales-rep-user'] });
+      const [org] = buildOrgs([salesRep, admin({ aliases: [] })], {}, null);
+      expect(org.main.username).to.equal('test-xyz789@example.com');
+    });
+
+    it('a login with an alias is main when no login names a Dev Hub', () => {
+      const salesRep = scratchLogin('salesrep@example.org.00dee0000000006eee');
+      const [org] = buildOrgs([salesRep, admin({ devHubUsername: undefined })], {}, null);
+      expect(org.main.username).to.equal('test-xyz789@example.com');
+    });
+
+    it('a saved main login still wins over the creator', () => {
+      const salesRep = scratchLogin('salesrep@example.org.00dee0000000006eee');
+      const [org] = buildOrgs([salesRep, admin()], { [LAUNCHPAD]: salesRep.username }, null);
+      expect(org.main.username).to.equal(salesRep.username);
+    });
+  });
+
   it('keeps the 18-character org id as the sf CLI reports it', () => {
     const { aliasPair } = fixture();
     const [org] = buildOrgs(aliasPair, {}, null);

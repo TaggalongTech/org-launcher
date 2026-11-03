@@ -1,5 +1,13 @@
 import { expect } from 'chai';
-import { pkgFrom, reasonFor, visiblePackages, type Pkg } from '../../src/core/checks.js';
+import {
+  checkOrg,
+  isPermissionError,
+  NO_PERMISSION,
+  pkgFrom,
+  reasonFor,
+  visiblePackages,
+  type Pkg,
+} from '../../src/core/checks.js';
 
 describe('checks: packages and reasons', () => {
   it('visiblePackages hides Salesforce namespaces and keeps no-namespace packages', () => {
@@ -38,6 +46,21 @@ describe('checks: packages and reasons', () => {
     expect(reasonFor(new Error('expired access/refresh token'))).to.equal(
       'Its login expired or was revoked. Log in again with sf org login web.'
     );
+  });
+
+  it('a permission error is limited access, not an org that can not be reached', async () => {
+    const denied = Object.assign(new Error("sObject type 'ApexClass' is not supported."), { name: 'INVALID_TYPE' });
+    const check = await checkOrg(() => Promise.reject(denied), 'salesrep@example.org', {
+      timeoutMs: 1000,
+      project: null,
+      now: () => new Date(0),
+    });
+    expect(check.health).to.equal('limited');
+    expect(check.reason).to.equal(NO_PERMISSION);
+    expect(isPermissionError(Object.assign(new Error('insufficient access rights'), { name: 'INSUFFICIENT_ACCESS' }))).to.equal(
+      true
+    );
+    expect(isPermissionError(new Error('expired access/refresh token'))).to.equal(false);
   });
 
   it('a reason is one line and never carries a link or a session id', () => {

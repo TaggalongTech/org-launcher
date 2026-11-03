@@ -38,7 +38,7 @@ Type to filter. Press `/` to jump to the filter, the arrow keys to move, and Ent
 - **Type:** scratch, sandbox, Dev Hub, production or developer.
 - **Tags:** your own labels. Click one to see only orgs with that tag. The tabs at the top do the same.
 - **Packages:** installed packages and their versions. Packages Salesforce installs itself are left out. When an org holds Apex outside any package, you see `src · 38 Apex` in amber. If you ran `sf launcher` from the project that deployed it, the project's name follows.
-- **Expires:** days left for a scratch org. It turns red at 3 days or fewer. An expired scratch org says "expired" and offers Remove. An org that can't be checked says "can't reach" with a one-line reason, like an expired login.
+- **Expires:** days left for a scratch org. It turns red at 3 days or fewer. An expired scratch org says "expired" and offers Remove. An org that can't be checked says "can't reach" with a one-line reason, like an expired login. An org that answers but won't show its main login everything says "limited access": make an admin login the main login from the ⋯ menu.
 - **Note:** a short note. Click it to edit.
 - **Open** logs you in to the org in your browser. The `⋯` menu has the rest: pick the main login when an org has more than one, choose a browser for this org, hide the row, or remove the org's logins from this computer (this runs `sf org logout`).
 

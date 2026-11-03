@@ -12,8 +12,9 @@ export type Pkg = { name: string; namespace: string | null; version: string };
 /** Apex the org holds outside any package. `project` names the local project it likely came from. */
 export type SourceHint = { apexClasses: number; project: string | null };
 
+/** 'limited' means the org answered but this login isn't allowed to read what the check asks for. */
 export type Check = {
-  health: 'ok' | 'unreachable';
+  health: 'ok' | 'unreachable' | 'limited';
   reason: string | null;
   orgType: 'production' | 'developer' | null;
   packages: Pkg[];
@@ -47,6 +48,9 @@ const UNPACKAGED_APEX_SOQL = "SELECT COUNT() FROM ApexClass WHERE ManageableStat
 /** The reason when an org doesn't answer in time. Production always waits 30 seconds. */
 export const NO_ANSWER = 'No answer in 30 seconds';
 export const DEFAULT_TIMEOUT_MS = 30_000;
+
+/** The reason when the org answered but this login may not read what the check asks for. */
+export const NO_PERMISSION = "This login can't see everything the check reads. Make an admin login the main login (⋯ menu).";
 
 const HIDDEN = new Set(SALESFORCE_NAMESPACES.map((ns) => ns.toLowerCase()));
 
@@ -100,7 +104,15 @@ const LOGIN_GONE =
   /expired access\/refresh token|invalid_grant|INVALID_SESSION_ID|NamedOrgNotFound|No authorization information/i;
 const NOT_FOUND = /ENOTFOUND|getaddrinfo/i;
 const NETWORK = /ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket hang up|network/i;
+// The objects the check reads always exist, so "not supported" means this login may not see them.
+const DENIED = /INSUFFICIENT_ACCESS|insufficient access rights|API_DISABLED_FOR_ORG|sObject type '\w+' is not supported/i;
 const MAX_REASON = 200;
+
+/** True when the org answered but refused this login: the org is fine, the login lacks permission. */
+export function isPermissionError(error: unknown): boolean {
+  const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  return DENIED.test(message);
+}
 
 /** A one-line reason for a failed check. Links and session ids are removed. */
 export function reasonFor(error: unknown): string {
@@ -134,7 +146,8 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 }
 
 /**
- * Checks one org and never throws: a failure comes back as an unreachable check.
+ * Checks one org and never throws: a failure comes back as an unreachable check, or a limited one
+ * when the login lacks permission.
  *
  * @param options.project the local project the org's source came from, if known
  * @param options.now the time to stamp on the check when it finishes
@@ -157,7 +170,11 @@ export async function checkOrg(
       checkedAt,
     };
   } catch (error) {
+    const checkedAt = options.now().toISOString();
+    if (isPermissionError(error)) {
+      return { health: 'limited', reason: NO_PERMISSION, orgType: null, packages: [], source: null, checkedAt };
+    }
     const reason = error instanceof NoAnswer ? NO_ANSWER : reasonFor(error);
-    return { health: 'unreachable', reason, orgType: null, packages: [], source: null, checkedAt: options.now().toISOString() };
+    return { health: 'unreachable', reason, orgType: null, packages: [], source: null, checkedAt };
   }
 }

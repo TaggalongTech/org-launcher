@@ -180,6 +180,11 @@
       return [el('span', { class: 'red', title: org.healthReason || '' }, "can't reach"),
         org.healthReason ? el('span', { class: 'reason', title: org.healthReason }, org.healthReason) : null];
     }
+    // The org answered, so it isn't dead: only the main login lacks permission.
+    if (org.health === 'limited') {
+      return [el('span', { class: 'amber', title: org.healthReason || '' }, 'limited access'),
+        org.healthReason ? el('span', { class: 'reason', title: org.healthReason }, org.healthReason) : null];
+    }
     const d = org.daysLeft;
     if (org.type !== 'scratch' || d === null || d === undefined) return el('span', { class: 'muted' }, '—');
     const text = d < 0 ? 'expired' : d === 0 ? 'today' : `${d}d`;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 (2026-11-03)
+
+- A scratch org with a second user logged in now shows the login that created it. Salesforce Labs' Revenue Cloud launchpad logs in a sales rep next to the admin, and the row used to pick the sales rep: wrong username, and a check that said "can't reach". The main login is now the one whose auth file names the Dev Hub, then one with an alias.
+- A check that fails because the main login lacks permission now says "limited access" in amber, with how to fix it, instead of "can't reach". The org isn't treated as dead.
+
 ## 0.1.1 (2026-11-02)
 
 - A new icon: rows of orgs, in Taggalong's line style, for the page, the browser tab and the Dock app.

@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { expect } from 'chai';
-import type { OrgQuery, Pkg } from '../../src/core/checks.js';
+import { NO_PERMISSION, type OrgQuery, type Pkg } from '../../src/core/checks.js';
 import { Inventory, type OrgRow } from '../../src/core/inventory.js';
 import type { AuthSource, OrgLogin } from '../../src/core/orgs.js';
 import { StateStore } from '../../src/core/state.js';
@@ -151,6 +151,16 @@ describe('inventory: org checks in the background', () => {
     const row = rowFor(inv.rows(), BLUE);
     expect(row.health).to.equal('unreachable');
     expect(row.healthReason).to.equal('No answer in 30 seconds');
+  });
+
+  it('a login without permission marks the org limited, not unreachable', async () => {
+    const denied = Object.assign(new Error("sObject type 'ApexClass' is not supported."), { name: 'INVALID_TYPE' });
+    const inv = inventory([scratch(BLUE, 'blue@example.com', 'blue')], () => Promise.reject(denied));
+    inv.startRefresh();
+    await idle(inv);
+    const row = rowFor(inv.rows(), BLUE);
+    expect(row.health).to.equal('limited');
+    expect(row.healthReason).to.equal(NO_PERMISSION);
   });
 
   it('failed check keeps previous packages and flags checkFailed', async () => {
