@@ -20,6 +20,8 @@
     "/messages",
     "/web",
     "/assets",
+    "/licenses",
+    "/docs/images",
     "/oclif.manifest.json"
   ],
   "keywords": [

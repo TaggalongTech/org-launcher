@@ -6,15 +6,18 @@
   <title>Org Launcher</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <script src="/theme.js"></script>
   <link rel="stylesheet" href="/app.css">
 </head>
 <body>
   <header class="bar">
+    <span class="lockup"><img src="/icon.svg" alt="" width="22" height="22">Org Launcher</span>
     <input id="search" class="search" type="search" placeholder="Filter  ( / )   ↑↓ to move, Enter to open" autocomplete="off" aria-label="Filter orgs" autofocus>
     <nav id="tabs" class="tabs" aria-label="Tags"></nav>
     <span id="status" class="status"></span>
     <button id="refresh" class="link" type="button">refresh</button>
     <button id="settings" class="link" type="button">settings</button>
+    <button id="theme" class="link" type="button" title="Light, dark, or follow your system">theme: auto</button>
   </header>
   <div id="banner" class="banner" hidden></div>
   <main>

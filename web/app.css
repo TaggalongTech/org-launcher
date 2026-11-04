@@ -1,28 +1,40 @@
+/* Taggalong's colors: the field guide's white page and deep teal by day, a teal night after dark.
+   theme.js sets data-theme when someone picks one; without it the page follows the system. */
+@font-face { font-family: "Instrument Sans"; font-weight: 400 600; font-display: swap; src: url("/instrument-sans.woff2") format("woff2"); }
 :root {
-  --bg: #fff; --alt: #f7f8fa; --line: #e6e8ec; --text: #16181d; --muted: #6b7280; --faint: #a3a8b3;
-  --sel: #eef2ff; --accent: #4338ca; --red: #c2261b; --amber: #9a6100;
+  --bg: #fff; --alt: #f4f8f8; --line: #d5e2e4; --text: #17292d; --muted: #4e6268; --faint: #7c9095;
+  --sel: #e2f0f1; --accent: #0d4651; --on-accent: #fff; --brand: #0d4651; --red: #b3261e; --amber: #8a5a00;
+  --sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111318; --alt: #161920; --line: #262a33; --text: #e5e7eb; --muted: #9ca3af; --faint: #5f6673;
-    --sel: #1e2235; --accent: #a5b4fc; --red: #f87171; --amber: #fbbf24;
+  :root:not([data-theme="light"]) {
+    --bg: #0c1e22; --alt: #11282d; --line: #213f45; --text: #e2edee; --muted: #9db6bb; --faint: #627e84;
+    --sel: #16363c; --accent: #8ed0da; --on-accent: #0c1e22; --brand: #e2edee; --red: #f4867d; --amber: #f2b233;
     color-scheme: dark;
   }
 }
+:root[data-theme="dark"] {
+  --bg: #0c1e22; --alt: #11282d; --line: #213f45; --text: #e2edee; --muted: #9db6bb; --faint: #627e84;
+  --sel: #16363c; --accent: #8ed0da; --on-accent: #0c1e22; --brand: #e2edee; --red: #f4867d; --amber: #f2b233;
+  color-scheme: dark;
+}
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 13px/1.35 var(--sans); }
 button, select, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 8px 12px;
   background: var(--bg); border-bottom: 1px solid var(--line); }
+.lockup { display: inline-flex; align-items: center; gap: 8px; color: var(--brand); font-weight: 600; font-size: 14px; white-space: nowrap; }
+.lockup img { border-radius: 5px; }
 .search { flex: 1; min-width: 160px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 5px;
   background: var(--alt); color: var(--text); font: 13px var(--mono); }
 .tabs { display: flex; flex-wrap: wrap; gap: 2px; min-width: 0; }
 .tab { background: none; border: 0; padding: 3px 7px; border-radius: 4px; color: var(--muted); white-space: nowrap; }
-.tab[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.tab[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
 .tab .n { opacity: .7; margin-left: 3px; font-family: var(--mono); font-size: 11px; }
 .status { color: var(--muted); font-size: 12px; white-space: nowrap; font-family: var(--mono); }
 .link { background: none; border: 0; padding: 0; color: var(--accent); }
@@ -83,7 +95,7 @@ tr:not(:hover):not(.sel) .chip-add:not(:focus) { opacity: 0; }
 
 .actions { text-align: right; }
 .open { border: 1px solid var(--accent); background: none; color: var(--accent); border-radius: 4px; padding: 1px 10px; font-weight: 600; }
-.open:hover, tr.sel .open { background: var(--accent); color: var(--bg); }
+.open:hover, tr.sel .open { background: var(--accent); color: var(--on-accent); }
 .open:disabled { opacity: .5; cursor: default; }
 .danger { border-color: var(--red); color: var(--red); }
 .danger:hover { background: var(--red); color: var(--bg); }

@@ -613,7 +613,25 @@
     }
   }
 
+  // --- theme -------------------------------------------------------------------------------------
+  // auto follows the system; light and dark stay picked. theme.js applies the saved one before the first paint.
+  const THEMES = ['auto', 'light', 'dark'];
+  function showTheme() { $('theme').textContent = `theme: ${document.documentElement.dataset.theme || 'auto'}`; }
+  function nextTheme() {
+    const now = document.documentElement.dataset.theme || 'auto';
+    const next = THEMES[(THEMES.indexOf(now) + 1) % THEMES.length];
+    if (next === 'auto') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = next;
+    try {
+      if (next === 'auto') localStorage.removeItem('orgLauncher.theme');
+      else localStorage.setItem('orgLauncher.theme', next);
+    } catch (e) { /* storage blocked: it lasts until the page reloads */ }
+    showTheme();
+  }
+
   // --- wiring ------------------------------------------------------------------------------------
+  showTheme();
+  $('theme').addEventListener('click', nextTheme);
   $('search').addEventListener('input', (e) => { query = e.target.value.trim(); selId = null; render(); });
   $('refresh').addEventListener('click', refresh);
   $('settings').addEventListener('click', settingsDialog);

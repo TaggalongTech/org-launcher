@@ -115,6 +115,8 @@ describe('http: local JSON API and page', () => {
     mkdirSync(web);
     writeFileSync(join(web, 'index.html'), '<!doctype html><title>Org Launcher</title>');
     writeFileSync(join(web, 'app.js'), 'console.log("hi");');
+    writeFileSync(join(web, 'theme.js'), 'void 0;');
+    writeFileSync(join(web, 'instrument-sans.woff2'), Buffer.from([0x77, 0x4f, 0x46, 0x32]));
     store = new StateStore(dir);
     const pending = new Promise<Answer>((resolve) => {
       finishChecks = (): void => resolve({ orgType: 'Developer Edition', isSandbox: false, packages: [], unpackagedApex: 0 });
@@ -371,6 +373,11 @@ describe('http: local JSON API and page', () => {
     expect(page.text).to.include('Org Launcher');
     const js = await send('GET', '/app.js');
     expect(js.headers['content-type']).to.equal('text/javascript; charset=utf-8');
+    const theme = await send('GET', '/theme.js');
+    expect(theme.headers['content-type']).to.equal('text/javascript; charset=utf-8');
+    const font = await send('GET', '/instrument-sans.woff2');
+    expect(font.status).to.equal(200);
+    expect(font.headers['content-type']).to.equal('font/woff2');
   });
 
   it('logs method and path only', async () => {

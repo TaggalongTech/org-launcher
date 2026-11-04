@@ -31,10 +31,12 @@ const MAX_BODY = 10_000;
 /** Every file the page has. Nothing else is ever read from disk. */
 const STATIC: Readonly<Record<string, { file: string; type: string }>> = {
   '/': { file: 'index.html', type: 'text/html; charset=utf-8' },
+  '/theme.js': { file: 'theme.js', type: 'text/javascript; charset=utf-8' },
   '/app.js': { file: 'app.js', type: 'text/javascript; charset=utf-8' },
   '/app.css': { file: 'app.css', type: 'text/css; charset=utf-8' },
   '/icon.svg': { file: 'icon.svg', type: 'image/svg+xml' },
   '/manifest.json': { file: 'manifest.json', type: 'application/manifest+json' },
+  '/instrument-sans.woff2': { file: 'instrument-sans.woff2', type: 'font/woff2' },
 };
 
 const SECURITY_HEADERS: Readonly<Record<string, string>> = {

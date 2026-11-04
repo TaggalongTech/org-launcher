@@ -15,7 +15,7 @@ describe('web: static page files', () => {
   it('index.html references only same-origin assets', () => {
     const html = read('index.html');
     const refs = [...html.matchAll(/<(?:script|link|img)\b[^>]*\b(?:src|href)="([^"]*)"/g)].map((m) => m[1]);
-    expect(refs).to.include.members(['/app.js', '/app.css', '/icon.svg', '/manifest.json']);
+    expect(refs).to.include.members(['/theme.js', '/app.js', '/app.css', '/icon.svg', '/manifest.json']);
     for (const ref of refs) {
       expect(ref, ref).to.match(/^\/[^/]/);
     }
@@ -30,7 +30,7 @@ describe('web: static page files', () => {
 
   it('footer credit is the only external link', () => {
     const found: string[] = [];
-    for (const file of ['index.html', 'app.js', 'app.css', 'manifest.json', 'icon.svg']) {
+    for (const file of ['index.html', 'theme.js', 'app.js', 'app.css', 'manifest.json', 'icon.svg']) {
       for (const url of read(file).match(URL_PATTERN) ?? []) {
         if (!SVG_NAMESPACES.includes(url)) found.push(`${file}: ${url}`);
       }
@@ -38,6 +38,19 @@ describe('web: static page files', () => {
     expect(found).to.deep.equal([`index.html: ${CREDIT}`]);
     const footer = /<footer[\s\S]*<\/footer>/.exec(read('index.html'))?.[0] ?? '';
     expect(footer).to.include(`href="${CREDIT}"`);
+  });
+
+  it('theme.js runs before the stylesheet, so a saved theme never flashes the other one', () => {
+    const html = read('index.html');
+    expect(html.indexOf('src="/theme.js"')).to.be.above(-1).and.below(html.indexOf('href="/app.css"'));
+  });
+
+  it('light and dark both come from the same tokens, and a chosen theme beats the system one', () => {
+    const css = read('app.css');
+    expect(css).to.include(':root[data-theme="dark"]');
+    expect(css).to.include('@media (prefers-color-scheme: dark)');
+    expect(css).to.include(':root:not([data-theme="light"])');
+    expect(css).to.include('src: url("/instrument-sans.woff2")');
   });
 
   it('manifest name "Org Launcher", icon purpose "any maskable"', () => {

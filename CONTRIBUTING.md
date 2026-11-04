@@ -29,6 +29,8 @@ export ORG_LAUNCHER_HOME="$(mktemp -d)"
 
 The page lists the orgs your own sf CLI knows. You can also run `sf plugins link .` to use your checkout as the installed plugin. Run `sf plugins unlink @taggalongtech/org-launcher` when you're done.
 
+To see the page without your own orgs, run `node scripts/demo.mjs` after `npm run build` and open http://127.0.0.1:4399. It serves the real page with made-up orgs and a throwaway data folder. The README screenshots in `docs/images/` come from it, at 1280 pixels wide.
+
 ## Rules every change keeps
 
 - **The page never builds HTML from strings.** No `innerHTML`, `outerHTML`, `insertAdjacentHTML` or `document.write`. Use `textContent` and `createElement`. The hygiene test checks this.
